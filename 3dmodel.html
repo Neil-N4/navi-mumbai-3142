@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Model - Navi Mumbai 3142</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Navi Mumbai 3142</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html" class="buton">Home</a></li>
+                <li><a href="landmarks.html" class="buton">Landmarks</a></li>
+                <li><a href="solution.html" class="buton">Solution</a></li>
+                <li><a href="profiles.html" class="buton">Profiles</a></li>
+                <li><a href="3dmodel.html" class="buton">3D Model</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <section id="3d-model">
+        <h2>3D Model of the Product</h2>
+        <div id="model-viewer"></div>
+    </section>
+    
+  
+    
+    <script>
+        import * as THREE from 'https://unpkg.com/three@0.138.3/build/three.module.js';
+        import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
+        // Three.js setup
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('model-viewer').appendChild(renderer.domElement);
+
+        // Lighting
+        const ambientLight = new THREE.AmbientLight(0x404040); // soft white light
+        scene.add(ambientLight);
+
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+        directionalLight.position.set(0, 1, 1).normalize();
+        scene.add(directionalLight);
+
+        // Load 3D model
+        const loader = new THREE.OBJLoader();
+        loader.load(
+            'path/to/your/model.obj',  // Update this to the path of your 3D model
+            function (object) {
+                scene.add(object);
+            },
+            function (xhr) {
+                console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+            },
+            function (error) {
+                console.log('An error happened', error);
+            }
+        );
+
+        camera.position.z = 5;
+
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
+    
+    <footer>
+        <p>&copy; 3142 Navi Mumbai. All rights reserved.</p>
+    </footer>
+</body>
+</html>
